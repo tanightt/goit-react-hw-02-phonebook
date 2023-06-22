@@ -8,8 +8,6 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    name: '',
-    number: '',
   };
 
   handleChangeValue = ({ target }) => {
@@ -31,8 +29,6 @@ export class App extends Component {
     const newContact = { id: crypto.randomUUID(), name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
-      name: '',
-      number: '',
     }));
   };
 
@@ -43,14 +39,12 @@ export class App extends Component {
   };
 
   render() {
-    const { contacts, filter, name, number } = this.state;
+    const { contacts, filter } = this.state;
 
     return (
       <Card>
         <h1>Phonebook</h1>
         <ContactForm
-          name={name}
-          number={number}
           handleSubmit={this.handleSubmit}
           handleChangeValue={this.handleChangeValue}
         />
@@ -67,8 +61,8 @@ export class App extends Component {
   }
 }
 
-export default App;
-
 const Card = styled.div`
   margin-left: 20px;
 `;
+
+export default App;

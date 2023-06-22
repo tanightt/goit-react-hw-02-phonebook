@@ -1,18 +1,12 @@
 import PropTypes from 'prop-types';
 import { StyledBtn, StyledForm } from './ContactForm.styled';
 
-export const ContactForm = ({
-  name,
-  number,
-  handleSubmit,
-  handleChangeValue,
-}) => {
+export const ContactForm = ({ handleSubmit, handleChangeValue }) => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       <h3>Name</h3>
       <input
         onChange={handleChangeValue}
-        value={name}
         type="text"
         name="name"
         pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
@@ -22,7 +16,6 @@ export const ContactForm = ({
       <h3>Number</h3>
       <input
         onChange={handleChangeValue}
-        value={number}
         type="tel"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -35,8 +28,6 @@ export const ContactForm = ({
 };
 
 ContactForm.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleSubmit: PropTypes.func,
   handleChangeValue: PropTypes.func,
 };
