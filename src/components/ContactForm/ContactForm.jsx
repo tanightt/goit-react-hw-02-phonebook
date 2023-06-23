@@ -33,7 +33,7 @@ export class ContactForm extends Component {
           type="text"
           name="name"
           pattern="^[A-Za-zА-Яа-яЁё]+\s?[A-Za-zА-Яа-яЁё]+$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          title="Name may contain only letters and a single space in between. For example Rosie Simpson"
           value={name}
           required
         />
@@ -43,7 +43,7 @@ export class ContactForm extends Component {
           type="tel"
           name="number"
           pattern="^\d{3}(-?\d{2}){1,2}$"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          title="Phone number must be in the format 123-45-789 or 12345789"
           value={number}
           required
         />
