@@ -1,33 +1,54 @@
-import PropTypes from 'prop-types';
 import { StyledBtn, StyledForm } from './ContactForm.styled';
+import { Component } from 'react';
 
-export const ContactForm = ({ handleSubmit, handleChangeValue }) => {
-  return (
-    <StyledForm onSubmit={handleSubmit}>
-      <h3>Name</h3>
-      <input
-        onChange={handleChangeValue}
-        type="text"
-        name="name"
-        pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-      />
-      <h3>Number</h3>
-      <input
-        onChange={handleChangeValue}
-        type="tel"
-        name="number"
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-      />
-      <StyledBtn type="submit">Add contact</StyledBtn>
-    </StyledForm>
-  );
-};
+export class ContactForm extends Component {
+  state = {
+    name: '',
+    number: '',
+  };
 
-ContactForm.propTypes = {
-  handleSubmit: PropTypes.func,
-  handleChangeValue: PropTypes.func,
-};
+  handleChangeValue = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+    this.props.handleSubmit(this.state);
+    this.resetForm();
+  };
+
+  resetForm = () => {
+    this.setState({ name: '', number: '' });
+  };
+
+  render() {
+    const { name, number } = this.state;
+
+    return (
+      <StyledForm onSubmit={this.handleFormSubmit}>
+        <h3>Name</h3>
+        <input
+          onChange={this.handleChangeValue}
+          type="text"
+          name="name"
+          pattern="^[A-Za-zА-Яа-яЁё]+\s?[A-Za-zА-Яа-яЁё]+$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          value={name}
+          required
+        />
+        <h3>Number</h3>
+        <input
+          onChange={this.handleChangeValue}
+          type="tel"
+          name="number"
+          pattern="^\d{3}(-?\d{2}){1,2}$"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          value={number}
+          required
+        />
+        <StyledBtn type="submit">Add contact</StyledBtn>
+      </StyledForm>
+    );
+  }
+}

@@ -10,14 +10,13 @@ export class App extends Component {
     filter: '',
   };
 
-  handleChangeValue = ({ target }) => {
-    const { name, value } = target;
-    return this.setState({ [name]: value });
+  handleChangeValue = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const { contacts, name, number } = this.state;
+  handleSubmit = ({ name, number }) => {
+    const { contacts } = this.state;
     const isDuplicate = contacts.some(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
@@ -26,6 +25,7 @@ export class App extends Component {
       alert(`${name} is already in contacts!`);
       return;
     }
+
     const newContact = { id: crypto.randomUUID(), name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
@@ -38,22 +38,25 @@ export class App extends Component {
     }));
   };
 
-  render() {
+  handleFilter = () => {
     const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  render() {
+    const { filter } = this.state;
 
     return (
       <Card>
         <h1>Phonebook</h1>
-        <ContactForm
-          handleSubmit={this.handleSubmit}
-          handleChangeValue={this.handleChangeValue}
-        />
+        <ContactForm handleSubmit={this.handleSubmit} />
 
         <h2>Contacts</h2>
         <Filter filter={filter} handleChangeValue={this.handleChangeValue} />
         <ContactList
-          contacts={contacts}
-          filter={filter}
+          contacts={this.handleFilter()}
           handleDelete={this.handleDelete}
         />
       </Card>

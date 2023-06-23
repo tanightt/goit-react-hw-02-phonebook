@@ -1,13 +1,10 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 
-export const ContactList = ({ contacts, filter, handleDelete }) => {
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+export const ContactList = ({ contacts, handleDelete }) => {
   return (
     <ul>
-      {filteredContacts.map(contact => (
+      {contacts.map(contact => (
         <li key={contact.id}>
           {contact.name}: {contact.number}
           <DeleteBtn type="button" onClick={() => handleDelete(contact.id)}>
@@ -35,6 +32,5 @@ ContactList.propTypes = {
       number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })
   ),
-  filter: PropTypes.string,
   handleDelete: PropTypes.func,
 };
